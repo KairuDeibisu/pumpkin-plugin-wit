@@ -10,6 +10,7 @@ world plugin {
     use command.{command-sender, consumed-args, command-error, command-suggestions, suggestion-request};
     use %world.{entity, chunk-buffer, generation-phase};
     use ipc.{plugin-id, ipc-message};
+    use gametest.{test};
 
     // --- Host-provided imports ---
 
@@ -31,6 +32,8 @@ world plugin {
     import i18n;
     /// Provides task scheduling for delayed or repeating logic.
     import scheduler;
+    /// Provides function-based GameTest registration.
+    import gametest;
     /// Provides world information and block manipulation.
     import %world;
     /// Provides entity types and manipulation.
@@ -106,6 +109,9 @@ world plugin {
 
     /// Dispatches a scheduled task execution to the plugin.
     export handle-task: func(handler-id: u32, server: server-instance);
+
+    /// Dispatches a registered function-based GameTest.
+    export handle-test-function: func(handler-id: u32, test: test);
 
     /// Processes an incoming message from another plugin if possible, and returns (a possibly empty) response.
     export handle-ipc-message: func(sender: plugin-id, message: ipc-message) -> result<ipc-message, string>;
