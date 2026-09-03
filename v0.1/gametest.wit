@@ -1,12 +1,12 @@
-/// Provides function-based GameTest registration and control.
+/// Provides function-based GameTest registration.
 interface gametest {
-    /// A running GameTest passed to a registered test function.
-    resource test {
-        /// Marks the current GameTest as successful.
-        succeed: func();
-    }
-
     /// Registers a function that can be referenced by a `minecraft:function`
     /// test instance.
     register-test-function: func(id: string, handler-id: u32) -> result<_, string>;
+}
+
+/// Plugin-provided dispatch for registered GameTest functions.
+interface gametest-handler {
+    /// Invokes a registered GameTest function and reports whether it succeeded.
+    handle-test-function: func(handler-id: u32) -> bool;
 }
