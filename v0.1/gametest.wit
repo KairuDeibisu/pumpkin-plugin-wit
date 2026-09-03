@@ -10,3 +10,11 @@ interface gametest {
     /// test instance.
     register-test-function: func(id: string, handler-id: u32) -> result<_, string>;
 }
+
+/// Plugin-provided dispatch for registered GameTest functions.
+interface gametest-handler {
+    use gametest.{test};
+
+    /// Invokes a registered GameTest function.
+    handle-test-function: func(handler-id: u32, test: test);
+}
