@@ -1,5 +1,14 @@
 /// Provides common types and utilities used across the entire plugin API.
 interface common {
+    /// A namespaced Minecraft resource identifier.
+    ///
+    /// Keeping namespace and path separate avoids language-specific parsing of
+    /// serialized `namespace:path` resource locations at the component boundary.
+    record identifier {
+        namespace: string,
+        path: string,
+    }
+
     /// Serialized text component as a postcard byte array.
     /// @deprecated Use the text-component resource from the text interface instead.
     type raw-text-component = list<u8>;
