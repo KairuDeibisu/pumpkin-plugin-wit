@@ -1,9 +1,10 @@
 /// Provides function-based GameTest registration and runtime assertions.
 interface gametest {
+    use common.{identifier};
+
     /// A function-based GameTest definition registered by a plugin.
     record game-test {
-        function-id: string,
-        structure-name: string,
+        structure-name: identifier,
         max-ticks: u32,
         setup-ticks: u32,
         required: bool,
@@ -15,19 +16,25 @@ interface gametest {
     }
 
     /// Registers a function callback host-side under a namespaced function id.
-    register-test-function: func(id: string, handler-id: u32) -> result<_, string>;
+    ///
+    /// This lower-level entry point is useful when a datapack owns the test instance
+    /// definition and the plugin only supplies its function implementation.
+    register-test-function: func(id: identifier, handler-id: u32) -> result<_, string>;
 
     /// Registers a gzipped Java Edition structure NBT payload for GameTest use.
-    register-structure: func(id: string, nbt: list<u8>) -> result<_, string>;
+    register-structure: func(id: identifier, nbt: list<u8>) -> result<_, string>;
 
-    /// Registers a function-based test instance in Pumpkin's GameTest registry.
-    register-test: func(id: string, test: game-test) -> result<_, string>;
+    /// Registers a function-backed test instance and its callback with Pumpkin.
+    ///
+    /// The test identifier is also used as the function identifier, so guests only
+    /// provide a callback handler id while the host owns Pumpkin registry wiring.
+    register-test: func(id: identifier, handler-id: u32, test: game-test) -> result<_, string>;
 
     /// Returns matching non-player entities inside the active test structure bounds.
-    get-entities-in-area: func(entity-type: string) -> result<list<test-entity>, string>;
+    get-entities-in-area: func(entity-type: identifier) -> result<list<test-entity>, string>;
 
     /// Asserts that an entity has a passenger of the requested type.
-    assert-entity-has-passenger: func(entity-id: s32, passenger-type: string) -> result<_, string>;
+    assert-entity-has-passenger: func(entity-id: s32, passenger-type: identifier) -> result<_, string>;
 }
 
 /// Plugin-provided dispatch for registered GameTest functions.
