@@ -1,0 +1,14 @@
+/// APIs for driving server-side GameTest actors.
+interface gametest {
+    use common.{position};
+    use %world.{%world};
+
+    /// A player-shaped entity controlled by test code instead of a network client.
+    resource simulated-player {
+        /// Starts moving this simulated player toward the requested world position.
+        move-to-location: func(location: position);
+    }
+
+    /// Creates and spawns a simulated player in `world` at `location`.
+    create-simulated-player: func(world: borrow<%world>, location: position) -> simulated-player;
+}

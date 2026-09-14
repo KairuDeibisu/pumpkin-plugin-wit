@@ -51,6 +51,8 @@ world plugin {
     import attributes;
     /// Provides player management.
     import player;
+    /// Provides server-side GameTest actors.
+    import gametest;
     /// Provides advancement definitions and progress types.
     import advancement;
     /// Provides custom recipe registration and management.
