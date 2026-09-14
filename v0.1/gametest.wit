@@ -10,5 +10,5 @@ interface gametest {
     }
 
     /// Creates and spawns a simulated player in `world` at `location`.
-    create-simulated-player: func(world: borrow<%world>, location: position) -> simulated-player;
+    create-simulated-player: func(world-ref: borrow<%world>, location: position) -> simulated-player;
 }
